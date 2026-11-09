@@ -82,7 +82,7 @@ Fetches the real VN30 index, rebases both series to 1,000, and generates:
 ### Installation
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/vn25-index.git
+git clone https://github.com/havinguy/vn25-index.git
 cd vn25-index
 pip install -r requirements.txt
 ```
