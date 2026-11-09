@@ -1,14 +1,14 @@
 # VN25 Index
 
-A custom Vietnamese equity index that removes Vingroup and Vietjet concentration risk from the VN30.
+A custom Vietnamese equity index that strips Vingroup and Vietjet stocks from the VN30, revealing how much these five tickers inflate Vietnam's headline benchmark.
 
 ![VN25 vs VN30 Performance](vn25_vs_vn30_chart.png)
 
 ## Why VN25?
 
-Vietnam's benchmark **VN30 Index** allocates a disproportionate weight to five tickers tied to a single conglomerate — **Vingroup** (VIC, VHM, VRE, VPL) and its affiliate **Vietjet** (VJC). This concentration means the index often reflects the fortune of one corporate group rather than the broader Vietnamese large-cap market.
+Vietnam's benchmark **VN30 Index** allocates a disproportionate weight to five tickers tied to a single conglomerate — **Vingroup** (VIC, VHM, VRE, VPL) and its affiliate **Vietjet** (VJC). When these stocks rally, the VN30 can signal a healthy market even when the majority of its constituents are flat or declining. The index becomes a mirror of one corporate group's performance, not the broader Vietnamese economy.
 
-**VN25 permanently excludes those five tickers** and re-weights the remaining 25 constituents using free-float market-cap weighting with a **10% per-stock cap**, producing a cleaner benchmark for Vietnam's blue-chip equities.
+**VN25 permanently excludes those five tickers** and re-weights the remaining 25 constituents using free-float market-cap weighting with a **10% per-stock cap**. The goal is not to build a "better" index — it's to expose the gap between what the VN30 says and what the rest of the market is actually doing.
 
 ## Methodology
 
@@ -30,13 +30,13 @@ At each quarterly rebalance:
 3. Redistribute excess weight pro-rata among uncapped stocks
 4. Repeat until no stock breaches the cap
 
-## Results & Conclusion
+## Results
 
-Over the Jan 2023 – Oct 2026 backtest window, **the real VN30 significantly outperformed the synthetic VN25** — returning approximately 80% versus 60% on a rebased (base = 1,000) basis, with shallower drawdowns.
+The chart tells the story. From Jan 2023 through mid-2025, VN25 and VN30 tracked each other closely — the Vingroup/Vietjet stocks weren't moving the needle. But from mid-2025 onward, the two indices **diverge sharply**: VN30 surges while VN25 stalls and declines.
 
-The initial hypothesis — that stripping out Vingroup/Vietjet concentration would yield a cleaner, better-performing benchmark — was **disproven by the data**. The five excluded mega-caps actually provided crucial ballast during market downturns and captured outsized gains during rallies, particularly from mid-2025 onward when the indices diverged sharply.
+That divergence is the point. The VN30's gains in this period were **driven almost entirely by the five excluded mega-caps**. Strip them out and the remaining 25 stocks — which represent the broader Vietnamese large-cap market — show a market that has actually been losing ground.
 
-This is a valuable finding in itself: it demonstrates empirically that VN30's concentration in Vingroup-affiliated stocks, while a genuine structural risk, has historically been **rewarded rather than penalized** by the market. Investors concerned about single-conglomerate exposure should weigh this trade-off carefully.
+This confirms the core thesis: **the VN30 can paint a misleadingly optimistic picture of Vietnam's equity market.** When a handful of Vingroup-affiliated tickers rally, the headline index rises even as the majority of its constituents trend downward. VN25 makes that distortion visible.
 
 ## Project Structure
 
