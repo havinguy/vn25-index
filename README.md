@@ -30,6 +30,14 @@ At each quarterly rebalance:
 3. Redistribute excess weight pro-rata among uncapped stocks
 4. Repeat until no stock breaches the cap
 
+## Results & Conclusion
+
+Over the Jan 2023 – Oct 2026 backtest window, **the real VN30 significantly outperformed the synthetic VN25** — returning approximately 80% versus 60% on a rebased (base = 1,000) basis, with shallower drawdowns.
+
+The initial hypothesis — that stripping out Vingroup/Vietjet concentration would yield a cleaner, better-performing benchmark — was **disproven by the data**. The five excluded mega-caps actually provided crucial ballast during market downturns and captured outsized gains during rallies, particularly from mid-2025 onward when the indices diverged sharply.
+
+This is a valuable finding in itself: it demonstrates empirically that VN30's concentration in Vingroup-affiliated stocks, while a genuine structural risk, has historically been **rewarded rather than penalized** by the market. Investors concerned about single-conglomerate exposure should weigh this trade-off carefully.
+
 ## Project Structure
 
 ```
@@ -50,13 +58,13 @@ vn25-index/
 
 ## Pipeline
 
-The pipeline runs in three steps:
+The pipeline is streamlined into three scripts:
 
-### Step 1 — Fetch Prices (`02_fetch_historical_prices.py`)
+### `02_fetch_historical_prices.py` — Data Ingestion
 
-Reads the unique tickers from `data/vn30_freefloat_history.csv` and downloads daily OHLCV data for each one using the [`vnstock`](https://github.com/thinh-vu/vnstock) library. Output is saved as one CSV per ticker under `data/prices/`.
+Reads the unique tickers from `data/vn30_freefloat_history.csv` and downloads daily OHLCV data for each one using the [`vnstock`](https://github.com/thinh-vu/vnstock) library (v0.2.x legacy API). Output is saved as one CSV per ticker under `data/prices/`.
 
-### Step 2 — Simulate VN25 (`03_simulate_vn25.py`)
+### `03_simulate_vn25.py` — Index Construction
 
 The core script. For each quarterly rebalance period:
 - Loads the VN30 basket composition and daily prices
@@ -66,7 +74,7 @@ The core script. For each quarterly rebalance period:
 
 Outputs `data/vn25_historical_index.csv` and `data/vn25_daily_weights.csv`.
 
-### Step 3 — Analyze (`04_analyze_vn25_vs_vn30.py`)
+### `04_analyze_vn25_vs_vn30.py` — Analysis & Visualization
 
 Fetches the real VN30 index, rebases both series to 1,000, and generates:
 - A side-by-side performance chart (`vn25_vs_vn30_chart.png`)
@@ -78,6 +86,8 @@ Fetches the real VN30 index, rebases both series to 1,000, and generates:
 
 - Python 3.9+
 - pip
+
+> **Important:** This project uses `vnstock==0.2.8.2` (the legacy API). Newer versions (v4+) use a different API syntax and enforce strict rate limits that will break the data ingestion script. The pinned version in `requirements.txt` handles this automatically.
 
 ### Installation
 
@@ -106,8 +116,8 @@ The performance chart will be saved as `vn25_vs_vn30_chart.png` in the project r
 
 ## Data Sources
 
-- **VN30 basket composition & free-float data** — Ho Chi Minh Stock Exchange (HOSE) quarterly announcements
-- **Daily OHLCV prices** — [`vnstock`](https://github.com/thinh-vu/vnstock) (Python wrapper for Vietnamese market data)
+- **VN30 basket composition & free-float data** (`data/vn30_freefloat_history.csv`) — Manually compiled from official quarterly HOSE regulatory PDF disclosures. Each row records a ticker's inclusion in the VN30 basket, its shares outstanding for index calculation, and its free-float percentage at each quarterly rebalance date. This static file serves as the seed for the entire pipeline.
+- **Daily OHLCV prices** — [`vnstock`](https://github.com/thinh-vu/vnstock) v0.2.x (Python wrapper for Vietnamese market data, using the legacy unrestricted API)
 
 ## Limitations
 
@@ -115,6 +125,7 @@ The performance chart will be saved as `vn25_vs_vn30_chart.png` in the project r
 - The index does not account for dividends (price-return only)
 - Transaction costs and slippage from rebalancing are not modeled
 - `vnstock` API availability may vary; historical data coverage depends on the upstream provider
+- The project is pinned to `vnstock==0.2.8.2`; future API deprecation may require migration
 
 ## License
 
